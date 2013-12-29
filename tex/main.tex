@@ -1,0 +1,201 @@
+% !TeX encoding=utf8
+% !TeX spellcheck = en-AU
+% !TeX program = pdflatex
+
+%
+% Altera Praxis Pty Ltd. [SEC=Open-Source]
+%
+% Copyright © 2014 Edward O'Callaghan. All Rights Reserved.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This file is licensed under Creative Commons Attribution 2.5 License. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% [NOTICE] - draft option applied for better debugging
+\documentclass[
+%   draft,     % draft mode (no images, layout errors shown)
+   %draft=false,     % final mode
+%%% --- Paper Settings ---
+   a4paper,
+   twosided,
+%%% --- Base Font Size ---
+   11pt,
+%%% --- Global Package Options ---
+   english, % language (passed to babel and other packages)
+            % (ngerman, english, french, ...)
+]{memoir}
+
+\usepackage{hyperref}
+\hypersetup{
+  pdfinfo={
+  Author       = {Edward O'Callaghan},
+  Title        = {Porting Coreboot to new bringups.},
+  Producer     = {Altera Praxis Pty Ltd},
+  CreationDate = {D:20130415072400},
+  Subject      = {Coreboot Porting Whitepapaer},
+  Keywords     = {disk; security; personal; server; UNIX; laptop; embedded;
+    coreboot; BIOS; firmware; anti-tamper; integrity}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Generally Citations %
+%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+  style=alphabetic, % Loads the bibliography and the citation style
+  % bibstyle=alphabetic, % load a bibliography style
+  % citestyle=alphabetic, % load a citatio style
+  natbib=true, % define natbib compatible cite commands
+%%--- Backend --- --- ---
+  backend=biber,    % (bibtex, biber)
+  bibwarn=true,     %
+  texencoding=auto, % auto-detect the input encoding
+  bibencoding=auto, % (auto (equal to tex), <encoding>)
+]{biblatex}
+%% .
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossary Configuration %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage
+ [acronym,         % create list of acronyms
+  toc=true,
+  shortcuts,
+  makeindex,
+  section,
+  footnote,
+  nonumberlist,
+  style=tree,      % need a style that displays the symbol
+  hyperfirst=false,% don’t hyperlink first use
+  sanitize=none    % switch off sanitization as description
+                   % will be used in the main text
+ ]{glossaries}
+\include{INP-00-glossary}
+\makeglossaries
+%% .
+
+%..
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={210mm,297mm},
+  left=20mm,
+  right=20mm,
+  top=20mm,
+  bottom=20mm,
+  bindingoffset=0mm
+}
+
+\usepackage{amsthm}
+% AMS Theorems
+\theoremstyle{plain} % default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{question}[thm]{Question}
+
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem*{cor}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{exmp}[thm]{Example}
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+\newtheorem{case}{Case}
+
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+
+\usepackage{textcomp}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{framed}
+
+%% [NOTICE] - Special package to include git version info %%
+\usepackage{gitinfo}
+
+\lstdefinestyle{customcode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=single,
+  xleftmargin=\parindent,
+  language=sh,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  morekeywords={iptables,block, in, any, all},
+  title=\lstname
+}
+
+\lstset{escapechar=@,style=customcode}
+
+\usepackage{chronosys}
+\usepackage{tikz}
+\usetikzlibrary{automata,arrows,calc,positioning,shapes.geometric,shapes.multipart,chains,decorations.pathreplacing}
+\usepackage{epstopdf}
+
+
+%%%%%%%%%%%%%%%%
+% Bibliography %
+%%%%%%%%%%%%%%%%
+\bibliography{research}
+%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Start of Document %
+%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Section : Title Page %
+%%%%%%%%%%%%%%%%%%%%%%%%
+\input{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Chapter: Overview %
+%%%%%%%%%%%%%%%%%%%%%
+%\chapter{Overview}
+%\input{chapters/overview.tex}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Chapter: Firmware %
+%%%%%%%%%%%%%%%%%%%%%
+\chapter{Firmware}
+\input{coreboot.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter: Getting Further %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{getting-further.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Section : Appendix %
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Section : Glossary %
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\printglossaries
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section : Bibliography %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\printbibliography
+
+%%%%%%%%%%%%%%%%%%%
+% End of Document %
+%%%%%%%%%%%%%%%%%%%
+\end{document}
